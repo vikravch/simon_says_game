@@ -24,6 +24,7 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import GamePage from "./features/game/presentation/pages/GamePage.tsx";
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -71,12 +72,11 @@ function App(): React.JSX.Element {
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
-        <Header />
         <View
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
-          <Section title="Step One">
+          {/*<Section title="Step One">
             Edit <Text style={styles.highlight}>App.tsx</Text> to change this
             screen and then come back to see your edits.
           </Section>
@@ -89,7 +89,8 @@ function App(): React.JSX.Element {
           <Section title="Learn More">
             Read the docs to discover what to do next:
           </Section>
-          <LearnMoreLinks />
+          <LearnMoreLinks />*/}
+          <GamePage/>
         </View>
       </ScrollView>
     </SafeAreaView>
