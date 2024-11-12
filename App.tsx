@@ -5,58 +5,58 @@
  * @format
  */
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
+import React, {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
-  Text,
   useColorScheme,
   View,
 } from 'react-native';
 
 import {
   Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import GamePage from "./features/game/presentation/pages/GamePage.tsx";
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+import GamePage from './features/game/presentation/pages/GamePage.tsx';
+import ResultsPage from './features/game/presentation/pages/ResultsPage.tsx';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+//import {CollectionUserDataRepository} from './features/game/data/fake/CollectionUserDataRepository.ts';
+import {generateSequence} from './features/game/domain/use_cases/generateNewSequence.ts';
+import {testCurrentSequence} from './features/game/domain/use_cases/testCurrentSequence.ts';
+import {getUserData} from './features/game/domain/use_cases/getUserData.ts';
+import {saveUserResult} from './features/game/domain/use_cases/saveUserResult.ts';
+import {saveUserName} from './features/game/domain/use_cases/saveUserName.ts';
+import {AsyncStorageUserDataRepository} from './features/game/data/preferences/AsyncStorageUserDataRepository.ts';
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+const Stack = createNativeStackNavigator();
+
+export const userDataRepository = new AsyncStorageUserDataRepository();
+export const useCases = {
+    generateSequence,
+    testCurrentSequence,
+    getUserData: getUserData(userDataRepository),
+    saveUserResult: saveUserResult(userDataRepository),
+    saveUserName: saveUserName(userDataRepository),
+};
+
+function App(): React.JSX.Element {
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
+      <NavigationContainer>
+        <Stack.Navigator
+            initialRouteName="Home"
+            screenOptions={{ headerShown: false }}
+        >
+          <Stack.Screen name="Home" component={GamePage} />
+          <Stack.Screen name="Results" component={ResultsPage} />
+        </Stack.Navigator>
+      </NavigationContainer>
   );
 }
 
-function App(): React.JSX.Element {
+export function PageWrapper(props: PropsWithChildren<{}>): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
@@ -64,36 +64,22 @@ function App(): React.JSX.Element {
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          {/*<Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />*/}
-          <GamePage/>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+      <SafeAreaView style={backgroundStyle}>
+        <StatusBar
+            barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+            backgroundColor={backgroundStyle.backgroundColor}
+        />
+        <ScrollView
+            contentInsetAdjustmentBehavior="automatic"
+            style={backgroundStyle}>
+          <View
+              style={{
+                backgroundColor: isDarkMode ? Colors.black : Colors.white,
+              }}>
+            {props.children}
+          </View>
+        </ScrollView>
+      </SafeAreaView>
   );
 }
 
