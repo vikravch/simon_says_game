@@ -1,4 +1,5 @@
-import {Score, UserDataRepository} from '../../domain/repository/UserDataRepository.ts';
+import {UserDataRepository} from '../../domain/repository/UserDataRepository.ts';
+import {Score} from '../../domain/model/Score.ts';
 
 export class CollectionUserDataRepository implements UserDataRepository {
     #userName: string = '';

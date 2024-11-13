@@ -1,7 +1,7 @@
 import {SimonItem} from '../../../general/types/SimonItem.ts';
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {useCases} from '../../../App.tsx';
-import {Score} from '../domain/repository/UserDataRepository.ts';
+import {Score} from '../domain/model/Score.ts';
 
 const initialState = {
     // Game lifecycle flags

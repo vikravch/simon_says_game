@@ -1,5 +1,6 @@
-import {Score, UserDataRepository} from '../../domain/repository/UserDataRepository.ts';
+import {UserDataRepository} from '../../domain/repository/UserDataRepository.ts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Score} from '../../domain/model/Score.ts';
 
 export class AsyncStorageUserDataRepository implements UserDataRepository {
     #storage;

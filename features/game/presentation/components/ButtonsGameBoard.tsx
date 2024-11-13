@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import SGBoardItem from './SGBoardItem.tsx';
-import {simonGameBoardItems, SimonItem} from '../../../../general/types/SimonItem.ts';
+import {simonGameBoardItems} from '../../../../general/types/SimonItem.ts';
 
 function ButtonsGameBoard() {
     return (
@@ -18,17 +18,17 @@ const styles = StyleSheet.create({
     container: {
         display: 'flex',
         flex: 1,
-        flexDirection: 'row',      // Lay out items in a row
-        flexWrap: 'wrap',           // Allow items to wrap to the next line
-        justifyContent: 'center',   // Center items horizontally
-        alignItems: 'center',       // Center items vertically
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     box: {
-        flexBasis: '45%',           // Each box takes up about half of the row width
-        height: 100,                // Set a fixed height
-        margin: 5,                  // Add spacing around boxes
-        justifyContent: 'center',   // Center text within each box
-        alignItems: 'center',       // Center text within each box
+        flexBasis: '45%',
+        height: 100,
+        margin: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });
 

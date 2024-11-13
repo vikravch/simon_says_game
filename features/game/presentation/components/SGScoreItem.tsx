@@ -1,5 +1,5 @@
 import React from 'react';
-import {Score} from '../../domain/repository/UserDataRepository.ts';
+import {Score} from '../../domain/model/Score.ts';
 import {StyleSheet, Text, View} from 'react-native';
 import {formatTime} from '../../../../general/utils/formatTime.ts';
 

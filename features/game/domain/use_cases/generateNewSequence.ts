@@ -4,6 +4,7 @@ const itemsOptionsString = simonGameBoardItems.join('');
 export const generateRandomItem = (): SimonItem => {
     return itemsOptionsString.at(Math.random() * simonGameBoardItems.length) as SimonItem;
 };
+// Totally random sequence generator
 export const generateSequence = (length: number): Array<SimonItem> => {
     const res: Array<SimonItem> = [];
     for (let i = 0; i < length; i++) {

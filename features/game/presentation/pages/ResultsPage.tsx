@@ -15,7 +15,7 @@ function ResultsPage({ navigation }: any) {
 
     return (
         <PageWrapper>
-            <View >
+            <View>
                 <Text style={styles.h1}>{userName} your best results:</Text>
                 <FlatList
                     data={calculateCurrentData()}
