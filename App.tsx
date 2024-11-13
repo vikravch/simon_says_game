@@ -24,7 +24,7 @@ import ResultsPage from './features/game/presentation/pages/ResultsPage.tsx';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 //import {CollectionUserDataRepository} from './features/game/data/fake/CollectionUserDataRepository.ts';
-import {generateSequence} from './features/game/domain/use_cases/generateNewSequence.ts';
+import {generateSequence, generateSequenceFromPrevious} from './features/game/domain/use_cases/generateNewSequence.ts';
 import {testCurrentSequence} from './features/game/domain/use_cases/testCurrentSequence.ts';
 import {getUserData} from './features/game/domain/use_cases/getUserData.ts';
 import {saveUserResult} from './features/game/domain/use_cases/saveUserResult.ts';
@@ -36,6 +36,7 @@ const Stack = createNativeStackNavigator();
 export const userDataRepository = new AsyncStorageUserDataRepository();
 export const useCases = {
     generateSequence,
+    generateSequenceFromPrevious,
     testCurrentSequence,
     getUserData: getUserData(userDataRepository),
     saveUserResult: saveUserResult(userDataRepository),
@@ -69,24 +70,24 @@ export function PageWrapper(props: PropsWithChildren<{}>): React.JSX.Element {
             barStyle={isDarkMode ? 'light-content' : 'dark-content'}
             backgroundColor={backgroundStyle.backgroundColor}
         />
-        <ScrollView
-            contentInsetAdjustmentBehavior="automatic"
-            style={backgroundStyle}>
           <View
-              style={{
+              style={[styles.sectionContainer, {
                 backgroundColor: isDarkMode ? Colors.black : Colors.white,
-              }}>
+              }]}>
             {props.children}
           </View>
-        </ScrollView>
       </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+
   sectionContainer: {
-    marginTop: 32,
+    height: '100%',
+    paddingTop: 32,
     paddingHorizontal: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   sectionTitle: {
     fontSize: 24,

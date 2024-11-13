@@ -6,9 +6,10 @@ import { createLogger } from 'redux-logger';
 const logger = createLogger();
 
 export const store = configureStore({
-    reducer: gameReducer,
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(logger),
+    reducer: {gameReducer},
+
+    /*middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(logger),*/
 });
 
 export type AppDispatch = typeof store.dispatch;
