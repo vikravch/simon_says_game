@@ -11,12 +11,14 @@ function ResultsPage({ navigation }: any) {
         scoreList,
     } = useAppSelector(store => store.gameReducer);
 
+    const calculateCurrentData = () => scoreList.slice(-10).sort((a, b) => b.score - a.score);
+
     return (
         <PageWrapper>
             <View >
                 <Text style={styles.h1}>{userName} your best results:</Text>
                 <FlatList
-                    data={scoreList.slice(-10).sort((a, b) => b.score - a.score)}
+                    data={calculateCurrentData()}
                     renderItem={({item}) => <SGScoreItem score={item}/>}
                     keyExtractor={(item) => item.timestamp}/>
 

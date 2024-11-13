@@ -4,6 +4,7 @@ import {SimonItem} from '../../../../general/types/SimonItem.ts';
 import {useAppDispatch, useAppSelector} from '../../../../general/redux/store.ts';
 import * as Actions from '../redux.ts';
 import HapticFeedback from 'react-native-haptic-feedback';
+import {makeSound} from '../makeSound.ts';
 
 type Props = {
     style: StyleProp<ViewStyle>
@@ -19,13 +20,7 @@ function SgBoardItem({style, itemValue}: Props) {
     } = useAppSelector(store => store.gameReducer);
 
     const onHandleSimonItemClick = (itemValue: SimonItem) => {
-
-        const options = {
-            enableVibrateFallback: true,
-            ignoreAndroidSystemSettings: true,
-        };
-        HapticFeedback.trigger('impactHeavy', options);
-
+        makeSound();
         dispatch(Actions.simonItemClicked(itemValue));
     };
 
@@ -53,7 +48,7 @@ function SgBoardItem({style, itemValue}: Props) {
         <TouchableOpacity style={[style, styles.gameItemButton, (currentButtonToShow === itemValue && !isDemoDelay) ?
             styles.itemActive : {backgroundColor: calculateItemColor(itemValue)}]}
                    disabled={checkItemButtonDisabled()}
-                   onPress={() => onHandleSimonItemClick(itemValue)}><Text>{itemValue}</Text></TouchableOpacity>
+                   onPress={() => onHandleSimonItemClick(itemValue)} />
     );
 }
 

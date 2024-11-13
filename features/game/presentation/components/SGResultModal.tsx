@@ -7,7 +7,7 @@ import {useAppDispatch, useAppSelector} from '../../../../general/redux/store.ts
 type Props = {
     onClosed: () => void;
 }
-function SgResultModule({onClosed}:Props) {
+function SGResultModal({onClosed}:Props) {
     const dispatch = useAppDispatch();
 
     const {
@@ -34,15 +34,13 @@ function SgResultModule({onClosed}:Props) {
             <View style={styles.modalOverlay}>
                 <View style={styles.modalContent}>
                     <Text style={styles.modalText}>Game is over. Current sequence length - {lastUserResult}</Text>
-                    {/* TextInput for Username */}
                     {(userName === '') && <TextInput
                         style={styles.input}
                         placeholder="Username"
                         value={username}
                         onChangeText={setUsername}
                     />}
-                    {/* Button to Close Modal */}
-                    <SGButton onPress={onHandleCloseModal} title={'Save'}/>
+                    <SGButton onPress={onHandleCloseModal} title={'Save'} disabled={(username.length === 0) && (userName.length === 0)}/>
                 </View>
             </View>
         </Modal>
@@ -77,4 +75,4 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
 });
-export default SgResultModule;
+export default SGResultModal;

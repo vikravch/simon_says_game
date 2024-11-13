@@ -10,8 +10,8 @@ type Props = {
 function SgScoreItem({score}: Props) {
     return (
         <View style={styles.container}>
-            <Text style={styles.pointsText}>{score.score}</Text>
-            <Text>{formatTime(score.timestamp).trim()}</Text>
+            <Text style={styles.pointsBox}>{score.score}</Text>
+            <Text >{formatTime(score.timestamp).trim()}</Text>
         </View>
     );
 }
@@ -23,15 +23,14 @@ const styles = StyleSheet.create({
         marginVertical: 5,
         gap: 20,
     },
-    pointsText: {
+    pointsBox: {
         backgroundColor: '#2196F3',
         paddingVertical: 10,
         paddingHorizontal: 10,
         borderRadius: 5,
-    },
-    buttonText: {
         color: 'white',
         fontSize: 16,
+        fontWeight: 'bold',
     },
 });
 

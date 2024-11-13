@@ -1,16 +1,16 @@
 import React, {useEffect} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {SimonItem} from '../../../../general/types/SimonItem.ts';
 import {useAppDispatch, useAppSelector} from '../../../../general/redux/store.ts';
 import * as Actions from '../redux.ts';
 import {PageWrapper} from '../../../../App.tsx';
 import SGButton from '../components/SGButton.tsx';
 import ButtonsGameBoard from '../components/ButtonsGameBoard.tsx';
-import SGResultModule from '../components/SGResultModule.tsx';
+import SGResultModal from '../components/SGResultModal.tsx';
 import {delay} from '../../../../general/utils/delay.ts';
+import {makeSound} from '../makeSound.ts';
 
 const DELAY_BEFORE_DEMONSTRATION = 2000;
-const DELAY_BETWEEN_DEMONSTRATION = 1000;
+const DELAY_BETWEEN_DEMONSTRATION = 1000; // delay will be x2
 
 function GamePage({navigation}: any) {
     const dispatch = useAppDispatch();
@@ -18,6 +18,7 @@ function GamePage({navigation}: any) {
         isGameStarted,
         currentSequenceItemForDemo,
         gameSequence,
+        isDemoDelay,
     } = useAppSelector(store => store.gameReducer);
 
     useEffect(() => {
@@ -32,13 +33,15 @@ function GamePage({navigation}: any) {
     };
 
     const demonstrateCurrentSequence = async () => {
-        console.log('New item number - ' + currentSequenceItemForDemo);
         await delay(DELAY_BETWEEN_DEMONSTRATION);
         dispatch(Actions.demonstrateCurrent());
     };
 
     if (currentSequenceItemForDemo > -1) {
         delay(DELAY_BETWEEN_DEMONSTRATION).then(async () => {
+            if(!isDemoDelay){
+                makeSound();
+            }
             await demonstrateCurrentSequence();
         });
     }
@@ -53,7 +56,7 @@ function GamePage({navigation}: any) {
             <View style={styles.buttonsSection} >
                 {!isGameStarted && <SGButton title={'Start'} onPress={onHandleStartBtnClick} disabled={isGameStarted}/>}
             </View>
-            <SGResultModule onClosed={onClosed}/>
+            <SGResultModal onClosed={onClosed}/>
         </PageWrapper>
     );
 }

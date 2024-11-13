@@ -30,7 +30,6 @@ const gameReducer = createSlice({
 
             //state.gameSequence = useCases.generateSequence(state.gameSequence.length + 1);
             state.gameSequence = useCases.generateSequenceFromPrevious(state.gameSequence);
-            console.log('Game sequence generated - ' + state.gameSequence);
         },
         initSequenceDemonstration(state) {
             state.currentSequenceItemForDemo = 0;
@@ -43,22 +42,17 @@ const gameReducer = createSlice({
                     state.isDemoDelay = true;
                     state.currentSequenceItemForDemo++;
                 } else {
-                    console.log('Finish demonstration!');
                     state.currentSequenceItemForDemo = -2;
                 }
             }
         },
         simonItemClicked(state, action) {
             const itemClicked = action.payload as SimonItem;
-            console.log('Clicked on - ' + itemClicked);
             const newUserSequence = state.currentSequence.concat(itemClicked);
-            console.log('New user sequence - ' + newUserSequence + ' current sequence - ' + state.gameSequence);
 
             if (useCases.testCurrentSequence(newUserSequence, state.gameSequence) === 'Correct') {
                 state.currentSequence = newUserSequence;
-                console.log('Deal with this sequence!');
             } else if (useCases.testCurrentSequence(newUserSequence, state.gameSequence) === 'Incorrect') {
-                console.log('Error with this sequence!');
                 state.lastUserResult = state.gameSequence.length - 1;
 
                 state.gameSequence = [];
@@ -68,12 +62,9 @@ const gameReducer = createSlice({
                 state.isShowErrorMessage = true;
 
             } else if (useCases.testCurrentSequence(newUserSequence, state.gameSequence) === 'Finish'){
-                console.log('Finish this sequence!');
                 //state.gameSequence = useCases.generateSequence(state.gameSequence.length + 1);
                 state.gameSequence = useCases.generateSequenceFromPrevious(state.gameSequence);
                 state.currentSequence = [];
-
-                console.log('New sequence - ' + state.gameSequence);
 
                 state.currentSequenceItemForDemo = 0;
                 state.isDemoDelay = true;
@@ -100,20 +91,28 @@ const gameReducer = createSlice({
     },
 });
 
-export const initUserData = createAsyncThunk('fetchUserData', () => {
-    return useCases.getUserData.execute();
-});
+export const initUserData = createAsyncThunk(
+    'fetchUserData',
+        () => {
+                return useCases.getUserData.execute();
+        }
+    );
 
-export const setUserName = createAsyncThunk<string, string>('saveUserName', (userName) => {
-    console.log('Save user name', userName);
-    useCases.saveUserName.execute(userName);
-    return userName;
-});
+export const setUserName = createAsyncThunk<string, string>(
+    'saveUserName',
+        (userName) => {
+            useCases.saveUserName.execute(userName);
+            return userName;
+        }
+    );
 
-export const saveNewScore = createAsyncThunk<Score[], number>('saveNewScore', (score) => {
-    console.log('Save user name', score);
-    return useCases.saveUserResult.execute(score);
-});
+export const saveNewScore = createAsyncThunk<Score[], number>(
+    'saveNewScore',
+        (score) => {
+            console.log('Save user name', score);
+            return useCases.saveUserResult.execute(score);
+        }
+    );
 
 
 export const {
