@@ -1,6 +1,5 @@
 import {it} from '@jest/globals';
-import {generateRandomItem, generateSequence} from "../features/game/domain/use_cases/generateNewSequence.ts";
-import {testCurrentSequence} from "../features/game/domain/use_cases/testCurrentSequence.ts";
+import {testCurrentSequence} from '../features/game/domain/use_cases/testCurrentSequence.ts';
 it('main function',()=>{
     //console.log(generateRandomItem());
 
@@ -12,7 +11,7 @@ it('main function',()=>{
     try{
         console.log(testCurrentSequence([ 'B', 'R', 'R' ],[ 'B', 'R', 'R' ]));
     } catch (e){
-        console.log(e)
+        console.log(e);
     }
 });
 

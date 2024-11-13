@@ -1,9 +1,8 @@
 import React from 'react';
-import { StyleProp, StyleSheet, Text, TouchableOpacity, ViewStyle} from 'react-native';
+import { StyleProp, StyleSheet, TouchableOpacity, ViewStyle} from 'react-native';
 import {SimonItem} from '../../../../general/types/SimonItem.ts';
 import {useAppDispatch, useAppSelector} from '../../../../general/redux/store.ts';
 import * as Actions from '../redux.ts';
-import HapticFeedback from 'react-native-haptic-feedback';
 import {makeSound} from '../makeSound.ts';
 
 type Props = {
@@ -19,9 +18,9 @@ function SgBoardItem({style, itemValue}: Props) {
         gameSequence,
     } = useAppSelector(store => store.gameReducer);
 
-    const onHandleSimonItemClick = (itemValue: SimonItem) => {
+    const onHandleSimonItemClick = (itemClicked: SimonItem) => {
         makeSound();
-        dispatch(Actions.simonItemClicked(itemValue));
+        dispatch(Actions.simonItemClicked(itemClicked));
     };
 
     const checkItemButtonDisabled = (): boolean => (currentSequenceItemForDemo > -1) || !isGameStarted;
